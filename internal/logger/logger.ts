@@ -1,7 +1,7 @@
 import winston, { Logger as WinstonLogger } from "winston";
 import { LoggerConfig } from "../interfaces/logger_config.js";
 import SentryImport from "winston-transport-sentry-node";
-const Sentry = SentryImport.default;
+const Sentry = SentryImport;
 
 let logger: WinstonLogger | null = null;
 
@@ -41,7 +41,7 @@ export class Logger {
                         level: config.console?.level || "info"
                     }),
                     new Sentry(
-                        {  
+                        {
                             sentry: {
                                 dsn: config.sentry?.dsn,
                                 environment: config.sentry?.environment || "development"

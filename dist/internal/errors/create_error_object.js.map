@@ -1,0 +1,1 @@
+{"version":3,"file":"create_error_object.js","sourceRoot":"","sources":["../../../internal/errors/create_error_object.ts"],"names":[],"mappings":";;;AAAA;;;;;;GAMG;AACH,SAAgB,iBAAiB,CAAC,KAAc;IAC7C,IAAI,KAAK,YAAY,KAAK,IAAI,KAAK,YAAY,SAAS,EAAE;QACtD,OAAO,KAAK,CAAC;KAChB;IAED,OAAO,IAAI,KAAK,CAAC,MAAM,CAAC,KAAK,CAAC,CAAC,CAAC;AACnC,CAAC;AAND,8CAMC"}

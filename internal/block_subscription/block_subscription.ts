@@ -6,6 +6,7 @@ import { IBlock } from "../interfaces/block.js";
 import { Worker } from "worker_threads";
 import { Eth } from "web3-eth";
 import { createRequire } from "module";
+import url from "url";
 
 /**
  * Block subscription class which emits full block data whenever added to chain.
@@ -50,7 +51,7 @@ export class BlockSubscription extends AbstractBlockSubscription {
      */
     private setWorkers(): void {
         const workers: Worker[] = [];
-        const workerPath: string = createRequire(import.meta.url).resolve(`../block_getters/${this.blockGetterType}_worker`);
+        const workerPath: string = createRequire(url.pathToFileURL(__filename).toString()).resolve(`../block_getters/${this.blockGetterType}_worker`);
 
         if (!this.rpcWsEndpoints.length) {
             //TODO - throw error if no rpc
@@ -62,7 +63,7 @@ export class BlockSubscription extends AbstractBlockSubscription {
                 endpoint: this.rpcWsEndpoints[i],
                 maxRetries: this.maxRetries,
                 alternateEndpoint: this.alternateEndpoint ? this.alternateEndpoint : undefined,
-                rpcTimeout: this.rpcTimeout 
+                rpcTimeout: this.rpcTimeout
             };
 
             const worker = new Worker(

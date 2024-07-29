@@ -1,0 +1,1 @@
+{"version":3,"file":"is_base_error.js","sourceRoot":"","sources":["../../../internal/errors/is_base_error.ts"],"names":[],"mappings":";;;AAAA,mDAA4C;AAE5C;;;;;;GAMG;AACH,SAAgB,WAAW,CAAC,KAAc;IACtC,OAAO;IACH,YAAY;IACZ,OAAO,KAAK,KAAK,QAAQ,IAAI,KAAK,KAAK,IAAI,IAAK,YAAY,IAAI,KAAK,IAAI,KAAK,CAAC,UAAU,KAAK,yBAAS,CAAC,KAAK,CAAC,UAAU,CAC3H,CAAC;AACN,CAAC;AALD,kCAKC"}
