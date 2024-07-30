@@ -4,6 +4,7 @@ import protobuf, { Root, Type } from "protobufjs";
 import { ICoder } from "../interfaces/coder.js";
 import { createRequire } from "module";
 import { Logger } from "../logger/logger.js";
+import url from "url";
 const { load } = protobuf;
 
 /**
@@ -43,7 +44,7 @@ export class Coder implements ICoder {
                 this.loadPromise = load(
                     // https://nodejs.org/api/esm.html#no-requireresolve - Alternative for require.resolve
                     // @ts-ignore
-                    createRequire(import.meta.url).resolve(`${this.fileDirectory}/${this.fileName}.proto`)
+                    createRequire(url.pathToFileURL(__filename).toString()).resolve(`${this.fileDirectory}/${this.fileName}.proto`)
                 ).then((root: Root) => {
                     return root.lookupType(`${this.packageName}.${this.messageType}`);
                 });
@@ -78,12 +79,14 @@ export class Coder implements ICoder {
 
         try {
             if (this.messageType === "L1StateBlock") {
-                Logger.info({message: "In coder deserialize - for L1StateBlock", data: {
-                    base64: buffer.toString("base64"),
-                    stringData: buffer.toString(),
-                    buffer
-                }});
-            } 
+                Logger.info({
+                    message: "In coder deserialize - for L1StateBlock", data: {
+                        base64: buffer.toString("base64"),
+                        stringData: buffer.toString(),
+                        buffer
+                    }
+                });
+            }
             return this.protobufType.decode(buffer);
         } catch (error) {
             throw new CoderError(

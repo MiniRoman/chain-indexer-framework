@@ -8,12 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlockSubscription = void 0;
 const abstract_block_subscription_js_1 = require("./abstract_block_subscription.js");
 const block_producer_error_js_1 = require("../errors/block_producer_error.js");
 const worker_threads_1 = require("worker_threads");
 const module_1 = require("module");
+const url_1 = __importDefault(require("url"));
 /**
  * Block subscription class which emits full block data whenever added to chain.
  * The subscription takes care internally to backfill if historical blocks are requested.
@@ -50,7 +54,7 @@ class BlockSubscription extends abstract_block_subscription_js_1.AbstractBlockSu
      */
     setWorkers() {
         const workers = [];
-        const workerPath = (0, module_1.createRequire)(require('url').pathToFileURL(__filename).toString()).resolve(`../block_getters/${this.blockGetterType}_worker`);
+        const workerPath = (0, module_1.createRequire)(url_1.default.pathToFileURL(__filename).toString()).resolve(`../block_getters/${this.blockGetterType}_worker`);
         if (!this.rpcWsEndpoints.length) {
             //TODO - throw error if no rpc
             return;

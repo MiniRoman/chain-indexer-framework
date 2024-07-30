@@ -18,6 +18,7 @@ const coder_error_js_1 = require("../errors/coder_error.js");
 const protobufjs_1 = __importDefault(require("protobufjs"));
 const module_1 = require("module");
 const logger_js_1 = require("../logger/logger.js");
+const url_1 = __importDefault(require("url"));
 const { load } = protobufjs_1.default;
 /**
  * The deserialiser class provides simple and straighforward methods to load and deserialise a buffer based on
@@ -53,7 +54,7 @@ class Coder {
                     this.loadPromise = load(
                     // https://nodejs.org/api/esm.html#no-requireresolve - Alternative for require.resolve
                     // @ts-ignore
-                    (0, module_1.createRequire)(import.meta.url).resolve(`${this.fileDirectory}/${this.fileName}.proto`)).then((root) => {
+                    (0, module_1.createRequire)(url_1.default.pathToFileURL(__filename).toString()).resolve(`${this.fileDirectory}/${this.fileName}.proto`)).then((root) => {
                         return root.lookupType(`${this.packageName}.${this.messageType}`);
                     });
                 }
@@ -82,11 +83,13 @@ class Coder {
             }
             try {
                 if (this.messageType === "L1StateBlock") {
-                    logger_js_1.Logger.info({ message: "In coder deserialize - for L1StateBlock", data: {
+                    logger_js_1.Logger.info({
+                        message: "In coder deserialize - for L1StateBlock", data: {
                             base64: buffer.toString("base64"),
                             stringData: buffer.toString(),
                             buffer
-                        } });
+                        }
+                    });
                 }
                 return this.protobufType.decode(buffer);
             }
